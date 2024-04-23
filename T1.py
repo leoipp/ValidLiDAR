@@ -33,7 +33,8 @@ class LiDARVAL:
         return
 
     def return_density(self):
-        return
+        pipeline = f"{os.path.join(self.fusion_folder, 'ReturnDensity')} /ascii {os.path.join(self.valida_folder, 'density.asc')} 1 {os.path.join(self.np_folder, '*.las')}"
+        return os.system(pipeline)
 
     def dtm(self):
         return
