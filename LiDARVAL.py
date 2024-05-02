@@ -18,9 +18,9 @@ import matplotlib.pyplot as plt
 
 
 class LiDARVAL:
-    __author__ = "Eric Gorgens"
+    __author__ = "Leonardo Ippolito"
     __copyright__ = "NA"
-    __credits__ = "Leonardo Ippolito"
+    __credits__ = "Eric Gorgens"
     __license__ = "GPL"
     __version__ = "1.0.1"
     __maintainer__ = "Leonardo Ippolito"
@@ -32,9 +32,10 @@ class LiDARVAL:
         self.np_folder = np_folder
         self.valida_folder = valida_folder
 
-    def base_rel(self):
-        pipeline_1 = f"{os.path.join(self.fusion_folder, 'Catalog')} /drawtiles /countreturns /density:1,4,8 {os.path.join(self.np_folder, '*.las')} {os.path.join(self.valida_folder, 'Catalog')}"
-        pipeline_2 = f"{os.path.join(self.lastools_folder, 'lasinfo')} -cpu64 -i {os.path.join(self.np_folder, '*.las')} -merged -odir {self.valida_folder} -o report.txt -cd -histo gps_time 20"
+    def base_rel(self, nome):
+        print(os.path.join(self.np_folder, '*.las'))
+        pipeline_1 = f"{os.path.join(self.fusion_folder, 'Catalog')} /drawtiles /countreturns /density:1,5,10 {os.path.join(self.np_folder, '*.las')} {os.path.join(self.valida_folder, f'{nome}_Catalog')}"
+        pipeline_2 = f"{os.path.join(self.lastools_folder, 'lasinfo')} -cpu64 -i {os.path.join(self.np_folder, '*.las')} -merged -odir {self.valida_folder} -o {nome}_report.txt -cd -histo gps_time 20"
         os.system(pipeline_1)
         os.system(pipeline_2)
         return
@@ -121,8 +122,3 @@ class LiDARVAL:
             print("Return code:", process.returncode)
 
         return
-
-LiDARVAL(r'C:\Users\Leonardo\Downloads\fusionlatest',
-         r'C:\Users\Leonardo\Downloads\LAStools\LAStools\bin',
-         r'C:\Users\Leonardo\NEPIIT9144_Joao_de_Deus\NEPIIT9144_Joao_de_Deus_NP',
-         r'C:\Users\Leonardo\NEPIIT9144_Joao_de_Deus\validacao').chm()
